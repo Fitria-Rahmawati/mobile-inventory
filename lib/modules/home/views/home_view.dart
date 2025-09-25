@@ -47,9 +47,9 @@ class HomeView extends StatelessWidget {
                     onTap: () => Get.toNamed('/vendor'),
                   ),
                   _buildMenuCard(
-                    icon: Icons.people,
-                    label: "User",
-                    onTap: () => Get.toNamed('/user'),
+                    icon: Icons.storage,
+                    label: "Rak",
+                    onTap: () => Get.toNamed('/rak'),
                   ),
                   _buildMenuCard(
                     icon: Icons.input,
@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
                   _buildMenuCard(
                     icon: Icons.report,
                     label: "Laporan",
-                    onTap: () => Get.toNamed('/laporan'),
+                    onTap: () => Get.toNamed('/laporan-stok'),
                   ),
                 ],
               ),

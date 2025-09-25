@@ -14,7 +14,7 @@ class VendorView extends GetView<VendorController> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (controller.vendors.isEmpty) {
+        if (controller.vendors.isEmpty) { // ✅ sekarang aman
           return const Center(child: Text("Tidak ada data vendor"));
         }
 

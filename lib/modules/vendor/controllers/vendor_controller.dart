@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 import '../../../services/vendor_service.dart';
 
 class VendorController extends GetxController {
-  final VendorService _service = Get.find<VendorService>();
+  var isLoading = true.obs;
+  var vendors = <dynamic>[].obs; // ✅ List observable, bukan null
 
-  var vendors = [].obs;
-  var isLoading = false.obs;
+  final VendorService _vendorService = VendorService();
 
   @override
   void onInit() {
@@ -14,12 +14,14 @@ class VendorController extends GetxController {
   }
 
   Future<void> fetchVendors() async {
-    isLoading.value = true;
     try {
-      final data = await _service.getVendors();
-      vendors.value = data;
+      isLoading(true);
+      final data = await _vendorService.getVendor();
+      vendors.assignAll(data); // ✅ isi ke list observable
+    } catch (e) {
+      vendors.clear(); // kalau gagal, kosongkan list
     } finally {
-      isLoading.value = false;
+      isLoading(false);
     }
   }
 }

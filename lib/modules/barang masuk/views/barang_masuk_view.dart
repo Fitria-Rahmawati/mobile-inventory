@@ -23,8 +23,9 @@ class BarangMasukView extends StatelessWidget {
   itemBuilder: (context, index) {
     final item = controller.barangMasukList[index] ?? {};
 
-    final namaVendor = item['nama_vendor'] ?? "No Vendor";
-    final tanggal = item['tanggal'] ?? "-";
+  final namaVendor = item?['nama_vendor']?.toString() ?? "No Vendor";
+final tanggal    = item?['tanggal']?.toString() ?? "-";
+
 
     final total = (item['detail_masuk'] != null && item['detail_masuk'].isNotEmpty)
         ? item['detail_masuk']

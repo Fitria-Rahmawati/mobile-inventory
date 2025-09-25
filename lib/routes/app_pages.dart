@@ -12,6 +12,10 @@ import '../modules/home/views/home_view.dart';
 import '../modules/barang/bindings/barang_binding.dart';
 import '../modules/barang/views/barang_view.dart';
 
+// rak
+import '../modules/rak/bindings/rak_binding.dart';
+import '../modules/rak/views/rak_view.dart';
+
 // barang masuk
 import '../modules/barang masuk/bindings/barang_masuk_binding.dart';
 import '../modules/barang masuk/views/barang_masuk_view.dart';
@@ -49,6 +53,11 @@ class AppPages {
       page: () => const BarangView(),
       binding: BarangBinding(),
     ),
+      GetPage(
+      name: Routes.RAK,
+      page: () => const RakPage(),
+      binding: RakBinding(),
+    ),
     GetPage(
       name: Routes.barangMasuk,
       page: () => const BarangMasukView(),
@@ -77,8 +86,10 @@ class Routes {
   static const login = '/login';
   static const home = '/home';
   static const barang = '/barang';
+  // ignore: constant_identifier_names
+  static const RAK = '/rak';
   static const barangMasuk = '/barang-masuk';
   static const barangKeluar = '/barang-keluar';
   static const vendor = '/vendor';
-  static var laporan = '/laporan';
+  static var laporan = '/laporan-stok';
 }
