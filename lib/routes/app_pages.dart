@@ -60,7 +60,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.barangMasuk,
-      page: () => const BarangMasukView(),
+      page: () => BarangMasukView(),
       binding: BarangMasukBinding(),
     ),
     GetPage(

@@ -3,7 +3,7 @@ import '../../../services/barang_masuk_service.dart';
 
 class BarangMasukController extends GetxController {
   var isLoading = false.obs;
-  var barangMasukList = [].obs;
+  var barangMasukList = <Map<String, dynamic>>[].obs;
 
   final _service = BarangMasukService();
 

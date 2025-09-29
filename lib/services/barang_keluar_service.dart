@@ -19,18 +19,17 @@ class BarangKeluarService {
     }
   }
 
-  Future<void> tambahBarangKeluar(Map<String, dynamic> body) async {
+  Future<Map<String, dynamic>> getBarangKeluarDetail(int id) async {
     final token = await AuthService.getToken();
-    final response = await http.post(
-      Uri.parse("$baseUrl/barang-keluar"),
-      headers: {
-        "Authorization": "Bearer $token",
-        "Content-Type": "application/json",
-      },
-      body: jsonEncode(body),
+    final response = await http.get(
+      Uri.parse("$baseUrl/barang-keluar/$id"),
+      headers: {"Authorization": "Bearer $token"},
     );
-    if (response.statusCode != 201) {
-      throw Exception("Gagal tambah barang keluar");
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['data'];
+    } else {
+      throw Exception("Gagal ambil detail barang keluar");
     }
   }
 }

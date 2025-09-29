@@ -2,47 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/barang_masuk_controller.dart';
 
+// ignore: use_key_in_widget_constructors
 class BarangMasukView extends StatelessWidget {
-  const BarangMasukView({super.key});
+  final BarangMasukController controller = Get.put(BarangMasukController());
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<BarangMasukController>();
-
     return Scaffold(
       appBar: AppBar(title: const Text("Barang Masuk")),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
+
         if (controller.barangMasukList.isEmpty) {
           return const Center(child: Text("Belum ada data barang masuk"));
         }
+
         return ListView.builder(
-  itemCount: controller.barangMasukList.length,
-  itemBuilder: (context, index) {
-    final item = controller.barangMasukList[index] ?? {};
+          itemCount: controller.barangMasukList.length,
+          itemBuilder: (context, index) {
+            final bm = controller.barangMasukList[index];
+            final detailList = bm['detail_masuk'] ?? [];
 
-  final namaVendor = item?['nama_vendor']?.toString() ?? "No Vendor";
-final tanggal    = item?['tanggal']?.toString() ?? "-";
-
-
-    final total = (item['detail_masuk'] != null && item['detail_masuk'].isNotEmpty)
-        ? item['detail_masuk']
-            .map((d) => int.tryParse(d['total_harga'].toString()) ?? 0)
-            .reduce((a, b) => a + b)
-            .toString()
-        : "0";
-
-    return Card(
-      child: ListTile(
-        title: Text(namaVendor),
-        subtitle: Text("Tanggal: $tanggal"),
-        trailing: Text("Total: $total"),
-      ),
-    );
-  },
-);
+            return ExpansionTile(
+              title: Text(
+                bm['nama_vendor'] ?? "No Vendor",
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text("Tanggal: ${bm['tanggal']}"),
+              children: [
+                ...detailList.map<Widget>((detail) {
+                  return ListTile(
+                    title: Text(detail['nama_barang'] ?? "-"),
+                    subtitle: Text(
+                      "${detail['jumlah']} x Rp${detail['harga']}",
+                    ),
+                    trailing: Text(
+                      "Rp${detail['total_harga']}",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  );
+                }).toList(),
+              ],
+            );
+          },
+        );
       }),
     );
   }

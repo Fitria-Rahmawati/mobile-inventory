@@ -5,15 +5,22 @@ import 'auth_service.dart';
 class BarangMasukService {
   static const String baseUrl = "http://192.168.2.200:8080/api";
 
-  Future<List<dynamic>> getBarangMasuk() async {
+  Future<List<Map<String, dynamic>>> getBarangMasuk() async {
     final token = await AuthService.getToken();
     final response = await http.get(
       Uri.parse("$baseUrl/barang-masuk"),
       headers: {"Authorization": "Bearer $token"},
     );
+
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data['data'];
+      final Map<String, dynamic> body = jsonDecode(response.body);
+
+      if (body['data'] is List) {
+        // langsung return List<Map>
+        return (body['data'] as List).cast<Map<String, dynamic>>();
+      } else {
+        throw Exception("Format data tidak sesuai: 'data' bukan List");
+      }
     } else {
       throw Exception("Gagal ambil data barang masuk");
     }
